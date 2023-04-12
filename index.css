@@ -1,0 +1,109 @@
+:root{
+    --btn1 : #42b47b;
+    --btn2 : rgb(255, 58, 58);
+    --box1 : #161c48;
+    --box2 : #0a0733;
+    --border : #323956;
+    --text1 : #d15dff;
+    --text2 : rgb(235, 235, 235);
+    
+}
+*{
+    margin : 0px;
+    padding : 0px;
+    box-sizing: border-box;
+    z-index: 0;
+}
+#root{
+    width: 100vw;
+    height: 100vh;
+    background-image : radial-gradient(var(--box1),var(--box2));
+    overflow-x: hidden;
+    overflow-y: scroll;
+    color : var(--text2);
+    display: flex;
+    flex-direction: column;
+}
+
+
+/*************** SCROLL BAR ***************/
+::-webkit-scrollbar {
+    width: 10px;
+  }
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #353a66;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: var(--box2)
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+/*************** SCROLL BAR ***************/
+
+/******************* TEXT ******************/
+
+
+/******************* TEXT ******************/
+
+
+
+/******************** BOXES ***************/
+.box{
+    background-image: linear-gradient(to bottom right,var(--box1),var(--box2));
+    /* background-color: red; */
+}
+.glass{
+    background-color: hsla(233, 53%, 18%, 0.5);
+    backdrop-filter: blur(5px);
+}
+.fancyborder{
+    border : 2.5px solid var(--border);
+    border-top : 14px solid var(--border);
+    border-radius: 0.4em;
+    padding : 1.3em 0em;
+}
+.svg-img{
+    width: var(--svgheight);
+    height: var(--svgheight);
+    background-color: var(--border);
+    border-radius: 0.3em;
+    padding : 0.2em;
+    cursor: pointer;
+}
+/******************** BOXES ***************/
+
+
+/******************* BUTTON ***************/
+.btn{
+    color : var(--border);
+    padding : 0.2em 1em;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border-radius: 0.4em;
+    border : 2px solid var(--border);
+}
+.btn[color='green']{
+    background-color: var(--btn1);
+    box-shadow :4px 4px 7px #06b65e;
+}
+.btn[color='red']{
+    background-color: var(--btn2);
+    box-shadow: 4px 4px 7px orangered;
+}
+/******************* BUTTON ***************/
+
+
+
+@media screen and (min-width: 480px) {
+   
+}
+@media screen and ( min-width : 900px ) {
+    
+}
