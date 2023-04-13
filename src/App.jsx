@@ -1,8 +1,12 @@
-import React from 'react'
+import React from 'react';
+import Navbar from './components/Navbar/Navbar';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div>App</div>
+    <Routes>
+      <Route path='/' element={<Navbar/>}></Route>
+    </Routes>
   )
 }
 
