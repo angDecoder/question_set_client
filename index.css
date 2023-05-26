@@ -34,22 +34,60 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-background: #353a66;
+    background: var(--box2)
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-background: var(--box2)
+    background: #262b5a;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-background: #555;
+    background: #555;
 }
 /*************** SCROLL BAR ***************/
 
 /******************* TEXT ******************/
+.page_title{
+    color : var(--text2);
+    text-decoration: underline;
+    text-transform: uppercase;
+    text-underline-offset: 0.2em;
+    margin-top : 0.5em;
+}
 
+.title{
+    text-transform: capitalize;
+    color : var(--text1);
+    font-size: 1.4rem;
+}
+.para{
+
+}
+.subscript{
+    font-weight: bold;
+}
+
+@media screen and (min-width: 480px) {
+    .page_title{
+        font-size: 3rem;
+    }
+    .title{
+        font-size : 2.4rem;
+    }
+    .subscript{
+        font-size: 1.8rem;
+    }
+}
+@media screen and ( min-width : 900px ) {
+    .page_title{
+        font-size : 2.5rem;
+    }
+    .title{
+        font-size : 2rem;
+    }
+}
 
 /******************* TEXT ******************/
 
