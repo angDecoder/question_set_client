@@ -18,6 +18,7 @@ header{
     justify-content: space-between;
     color: white;
     border-bottom: 2px solid var(--border);
+    z-index: 1;
 }
 
 nav{
@@ -33,6 +34,7 @@ nav{
     gap: 1em;
     width: 65vw;
     height: 100vh;
+    z-index: 2;
 }
 nav > .navlink{
     color: white;

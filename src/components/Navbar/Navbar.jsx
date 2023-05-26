@@ -30,8 +30,9 @@ function Navbar() {
       <nav className='glass'>
         <img src={close} alt="" id='close' onClick={hideNavbar} />
         <NavLink className='navlink' to='/'>Home</NavLink>
-        <NavLink className='navlink' to='/'>Challenge</NavLink>
-        <NavLink className='navlink' to='/'>Login/Register</NavLink>
+        <NavLink className='navlink' to='/login'>Login</NavLink>
+        <NavLink className='navlink' to='/register'>Register</NavLink>
+        <NavLink className='navlink' to='/challenge'>Challenge</NavLink>
         <NavLink className='navlink' to='/'>Logout</NavLink>
       </nav>
     </header>
