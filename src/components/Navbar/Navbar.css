@@ -53,6 +53,12 @@ nav > .navlink{
    nav{
         gap : 1.5em;
    }
+   #logo{
+    width: 28vw;
+   }
+   #ham,#close{
+    width: 8vw;
+   }
 }
 @media screen and ( min-width : 900px ) {
     header{

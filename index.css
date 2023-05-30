@@ -3,12 +3,11 @@
     --btn1_disabled : rgb(60, 123, 94);
     --btn2 : rgb(255, 58, 58);
     --btn2_disabled : rgb(149, 82, 82);
-    --box1 : #161c48;
+    --box1 : rgb(22, 28, 72);
     --box2 : #0a0733;
     --border : #323956;
     --text1 : #d15dff;
     --text2 : rgb(235, 235, 235);
-    
 }
 *{
     margin : 0px;
@@ -70,26 +69,6 @@
     font-weight: bold;
 }
 
-@media screen and (min-width: 480px) {
-    .page_title{
-        font-size: 3rem;
-    }
-    .title{
-        font-size : 2.4rem;
-    }
-    .subscript{
-        font-size: 1.8rem;
-    }
-}
-@media screen and ( min-width : 900px ) {
-    .page_title{
-        font-size : 2.5rem;
-    }
-    .title{
-        font-size : 2rem;
-    }
-}
-
 /******************* TEXT ******************/
 
 
@@ -110,7 +89,7 @@
     padding : 1.3em 0em;
 }
 .svg-img{
-    width: 8vw;
+    width: 10vw;
     height: var(--svgheight);
     background-color: var(--border);
     border-radius: 0.3em;
@@ -172,14 +151,32 @@
 }
 
 @media screen and (min-width: 480px) {
+    .page_title{
+        font-size: 3.2rem;
+    }
+    .title{
+        font-size : 2.8rem;
+    }
+    .subscript{
+        font-size: 1.8rem;
+    }
    .input{
         font-size: 2rem;
    }
    .btn{
         font-size: 1.8rem;
    }
+   .svg-img{
+    width: 7vw;
+   }
 }
 @media screen and ( min-width : 900px ) {
+    .page_title{
+        font-size : 2.5rem;
+    }
+    .title{
+        font-size : 2rem;
+    }
     .input{
         width: 40%;
         font-size: 1.4rem;

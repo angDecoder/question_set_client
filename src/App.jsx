@@ -9,6 +9,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import Challenge from './components/Challenge/Challenge';
 // import AddChallenge from './components/AddChallenge/AddChallenge';
 import Question from './components/Question/Question';
+import AddQuestion from './components/AddQuestion/AddQuestion';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path='/challenge' element={<Challenge />} />
         {/* <Route path='/addchallenge' element={<AddChallenge />} /> */}
         <Route path='/question/:id' element={<Question />} />
+        <Route path='/addquestion' element={<AddQuestion />} />
       </Route>
     </Routes>
   )
