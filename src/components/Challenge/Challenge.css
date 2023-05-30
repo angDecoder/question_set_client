@@ -8,6 +8,7 @@
 
 .challenge_item{
     border-block: 2px solid var(--border);
+    position: relative;;
     width: 100%;
     padding-inline: 0.8em;
     padding-block : 0.5em;
@@ -46,6 +47,11 @@
     position: sticky;
     bottom : 0.5em;
     margin-block : 0.5em;
+}
+.cross{
+    position: absolute;
+    top : -5px;
+    right : 0px;
 }
 
 @media screen and (min-width: 480px) {

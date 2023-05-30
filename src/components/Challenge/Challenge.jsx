@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Challenge.css';
 import add from '../../assets/add.svg';
+import trash from '../../assets/trash.svg';
 
 const challenges = [
   {
@@ -71,6 +72,13 @@ const challenges = [
 ]
 
 function Challenge() {
+
+
+  const addChallenge = ()=>{
+    const arr = window.prompt('enter text');
+    console.log(arr);
+  }
+
   return (
     <div id='Challenge'>
       <h1 className='page_title'>Challenges</h1>
@@ -84,11 +92,11 @@ function Challenge() {
           }, [elem.solved, elem.total]);
 
           return <div key={elem.id} className='challenge_item'>
+            <img src={trash} alt="cross" className='svg-img cross' />
             <NavLink to={`/question/${elem.id}`} className='challenge_title title'>
               {title}
               <span className='challenge_solved'> ({solvedByTotal})</span>
             </NavLink>
-            {/* <p>{solvedByTotal}</p> */}
             <div className='challenge_progress'>
               <div></div>
             </div>
@@ -97,9 +105,9 @@ function Challenge() {
         })
       }
 
-      <NavLink to='/addchallenge' id='Add_challenge'>
+      <div id='Add_challenge' onClick={addChallenge}>
         <img src={add} className='svg-img' alt="add" />
-      </NavLink>
+      </div>
     </div>
   )
 }

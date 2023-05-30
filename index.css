@@ -51,6 +51,7 @@
 /******************* TEXT ******************/
 .page_title{
     color : var(--text2);
+    text-align: center;
     text-decoration: underline;
     text-transform: uppercase;
     text-underline-offset: 0.2em;
@@ -109,7 +110,7 @@
     padding : 1.3em 0em;
 }
 .svg-img{
-    width: var(--svgheight);
+    width: 8vw;
     height: var(--svgheight);
     background-color: var(--border);
     border-radius: 0.3em;
@@ -188,6 +189,9 @@
     }
     .btn{
         font-size: 1.3rem;
+    }
+    .svg-img{
+        width: 50px;
     }
 }
 
