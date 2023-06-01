@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import Login from './components/Form/Login';
 import Register from './components/Form/Register';
@@ -10,6 +11,7 @@ import Challenge from './components/Challenge/Challenge';
 // import AddChallenge from './components/AddChallenge/AddChallenge';
 import Question from './components/Question/Question';
 import AddQuestion from './components/AddQuestion/AddQuestion';
+import Solution from './components/Solution/Solution';
 
 function App() {
   return (
@@ -39,6 +41,7 @@ function App() {
         {/* <Route path='/addchallenge' element={<AddChallenge />} /> */}
         <Route path='/question/:id' element={<Question />} />
         <Route path='/addquestion' element={<AddQuestion />} />
+        <Route path='/solution/:id' element={<Solution />} />
       </Route>
     </Routes>
   )

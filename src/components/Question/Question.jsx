@@ -58,7 +58,9 @@ function Question() {
                 <a className='question_link' href={elem.link} target='_blank'>
                   Question Link
                 </a>
-                <button className='btn' color='green'>Solution</button>
+                <button className='btn' color='green'
+                  onClick={()=>navigate(`/solution/someid`)}
+                >Solution</button>
               </div>
               <p className=''>
                 {elem.tags.map(elem=>{
