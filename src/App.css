@@ -107,6 +107,7 @@
     font-weight: bold;
     border-radius: 0.4em;
     border : 2px solid var(--border);
+    cursor: pointer;
 }
 .btn[color='green']{
     background-color: var(--btn1);
@@ -188,7 +189,7 @@
         font-size: 1.3rem;
     }
     .svg-img{
-        width: 50px;
+        width: 40px;
     }
 }
 

@@ -1,24 +1,31 @@
 import React,{ useRef } from 'react';
 import './Form.css'
 import { toast } from 'react-toastify';
-import { loginUserApi } from '../../api/User';
+import { useNavigate,useLocation } from 'react-router-dom';
+// import { loginUserApi } from '../../api/User';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../features/userSlice';
 
 function Login() {
 
   const emailRef = useRef();
   const passRef = useRef();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const submit = (e)=>{
     e.preventDefault();
-    const email = emailRef.current;
-    const password = passRef.current;
+    const email = emailRef.current.value;
+    const password = passRef.current.value;
 
     document.querySelector('.btn[color="green"')
     .setAttribute('disabled',true);
     document.querySelector('.btn[color="red"')
     .setAttribute('disabled',true);
 
-    const r = loginUserApi({ email:email.value,password:password.value });
+    const r = dispatch(loginUser({email,password}));
     r.finally(()=>{
       console.log('finally');
       document.querySelector('.btn[color="green"')
@@ -26,6 +33,8 @@ function Login() {
       document.querySelector('.btn[color="red"')
       .removeAttribute('disabled')
     })
+    const from = location?.state?.from || '/';
+    navigate(from, { replace: true });
   }
   
   const clear = (e)=>{
