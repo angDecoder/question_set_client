@@ -2,9 +2,11 @@ import React,{ useRef } from 'react';
 import './Form.css'
 import { toast } from 'react-toastify';
 import { useNavigate,useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import { loginUserApi } from '../../api/User';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../features/userSlice';
+// import { USER_STATUS } from '../../features/userSlice';
 
 function Login() {
 
@@ -14,6 +16,8 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const from = location?.state?.from || '/';
 
   const submit = (e)=>{
     e.preventDefault();
@@ -25,7 +29,7 @@ function Login() {
     document.querySelector('.btn[color="red"')
     .setAttribute('disabled',true);
 
-    const r = dispatch(loginUser({email,password}));
+    const r = dispatch(loginUser({email,password,from,navigate}));
     r.finally(()=>{
       console.log('finally');
       document.querySelector('.btn[color="green"')
@@ -33,8 +37,6 @@ function Login() {
       document.querySelector('.btn[color="red"')
       .removeAttribute('disabled')
     })
-    const from = location?.state?.from || '/';
-    navigate(from, { replace: true });
   }
   
   const clear = (e)=>{
