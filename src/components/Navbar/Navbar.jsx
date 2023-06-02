@@ -4,23 +4,25 @@ import logo from '../../assets/logo.jpg';
 import ham from '../../assets/hamburger.svg';
 import close from '../../assets/cross.svg';
 import './Navbar.css';
+import { useSelector } from 'react-redux';
+import { USER_STATUS } from '../../features/userSlice';
 
 function Navbar() {
+
+  const { username,status } = useSelector(state => state.user);
 
   const hideNavbar = () => {
     const navbar = document.querySelector("nav");
     const show = navbar.classList.contains('shownav');
-    // console.log('hide');
-    if (show) 
+    if (show)
       navbar.classList.remove('shownav');
   }
 
   const showNavbar = () => {
     const navbar = document.querySelector("nav");
     const show = navbar.classList.contains('shownav');
-    if (!show) 
+    if (!show)
       navbar.classList.add('shownav');
-    
   }
 
   return (
@@ -33,7 +35,11 @@ function Navbar() {
         <NavLink className='navlink' to='/login'>Login</NavLink>
         <NavLink className='navlink' to='/register'>Register</NavLink>
         <NavLink className='navlink' to='/challenge'>Challenge</NavLink>
-        <NavLink className='navlink' to='/'>Logout</NavLink>
+        {
+          status === USER_STATUS.loggedin ?
+          <NavLink id='username' className='navlink' to='/'>Logout @{username}</NavLink>:
+          <span></span> 
+        }
       </nav>
     </header>
   )

@@ -12,6 +12,7 @@ import AddQuestion from './components/AddQuestion/AddQuestion';
 import Solution from './components/Solution/Solution';
 import Home from './components/Home/Home';
 import PersistentUser from './components/PersistentUser/PersistentUser';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 function App() {
   return (
@@ -35,16 +36,17 @@ function App() {
           <Outlet />
         </>}
       >
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-
-
         <Route path='/' element={<PersistentUser />} >
-          <Route path='/challenge' element={<Challenge />} />
-          <Route path='/question/:id' element={<Question />} />
-          <Route path='/addquestion' element={<AddQuestion />} />
-          <Route path='/solution/:id' element={<Solution />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+
+          <Route path='/' element={<ProtectedRoute />}>
+            <Route path='/challenge' element={<Challenge />} />
+            <Route path='/question/:id' element={<Question />} />
+            <Route path='/addquestion' element={<AddQuestion />} />
+            <Route path='/solution/:id' element={<Solution />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

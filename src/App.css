@@ -24,6 +24,11 @@
     display: flex;
     flex-direction: column;
 }
+#username{
+    color : var(--btn1);
+    font-weight: bold;
+    text-decoration:  underline;
+}
 
 
 /*************** SCROLL BAR ***************/
