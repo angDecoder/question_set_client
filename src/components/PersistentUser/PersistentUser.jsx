@@ -1,8 +1,8 @@
 import React,{ useState,useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { autoLoginUser } from '../../features/userSlice';
-import { USER_STATUS } from '../../features/userSlice'
+import { USER_STATUS } from '../../features/userSlice';
 
 function PersistentUser() {
 
@@ -14,13 +14,14 @@ function PersistentUser() {
       dispatch(autoLoginUser());
       setTried(true);
     }
-  },[]);
+  },[userStatus]);
 
+  console.log('here');
 
-  if(userStatus===USER_STATUS.loggedin)
+  if( tried && userStatus!==USER_STATUS.waiting  )
     return <Outlet />
-  else if( userStatus===USER_STATUS.waiting )
-    return <div>Loading ... </div>
+  else 
+    return <div>Loading ...</div>
 
 }
 

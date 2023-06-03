@@ -1,5 +1,5 @@
 import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
-import { loginUserApi,autoLoginUserApi } from '../api/User';
+import { loginUserApi,autoLoginUserApi, refreshTokenApi, logoutUserApi } from '../api/User';
 
 export const USER_STATUS = {
     loggedin : "loggedin",
@@ -24,13 +24,20 @@ export const autoLoginUser = createAsyncThunk(
     autoLoginUserApi
 )
 
+export const refreshToken = createAsyncThunk(
+    'user/refresh',
+    refreshTokenApi
+)
+
+export const logoutUser = createAsyncThunk(
+    'user/logout',
+    logoutUserApi
+)
+
 const userSlice = createSlice({
     name : 'user',
     initialState,
     reducers : {
-        updateToken : ()=>{
-
-        }
     },
     extraReducers : (builder)=>{
         builder
@@ -62,6 +69,28 @@ const userSlice = createSlice({
         .addCase(autoLoginUser.pending,(state)=>{
             state.status = USER_STATUS.waiting;
         })
+        .addCase(refreshToken.pending,(state)=>{
+            state.status = USER_STATUS.waiting;
+        })
+        .addCase(refreshToken.fulfilled,(state)=>{
+            state.status = USER_STATUS.loggedin;
+        })
+        .addCase(refreshToken.rejected,(state)=>{
+            state.status = USER_STATUS.loggedout;
+        })
+        .addCase(logoutUser.pending,(state)=>{
+            state.status = USER_STATUS.waiting
+        })
+        .addCase(logoutUser.fulfilled,(state)=>{
+            state.status = USER_STATUS.loggedout;
+            state = initialState;
+        })
+        .addCase(logoutUser.rejected,(state)=>{
+            state.status = USER_STATUS.loggedout;
+            state = initialState;
+        })
+        
+        
     }
 });
 

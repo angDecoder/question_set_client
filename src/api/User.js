@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 const ax = axios.create({
   baseURL: `${import.meta.env.VITE_REACT_APP_BASE_URL}`
-})
+});
 
 export const loginUserApi = async({ email,password,from,navigate }, thunkApi)=>{
 
@@ -72,6 +72,29 @@ export const autoLoginUserApi = async()=>{
   } catch (error) {
     console.log(error);
     toast.update(t,{render : `Login failed : ${error.response.data.message}`, isLoading : false,type : 'error',autoClose : true,closeOnClick : true });    
+    return thunkApi.rejectWithValue({ message: error.response.data.message });
+  }
+}
+
+export const logoutUserApi = async({email},thunkApi)=>{
+  const t = toast.loading('logging out');
+  try {
+    await ax.post('user/logout',{ email });
+    toast.update(t,{render : `user logged out`, isLoading : false,type : 'success',autoClose : true,closeOnClick : true });    
+    localStorage.removeItem('jwt_question_set');
+    return "";
+  } catch (error) {
+    toast.update(t,{render : `some error occured`, isLoading : false,type : 'error',autoClose : true,closeOnClick : true });    
+    return thunkApi.rejectWithValue({ message: error.response.data.message });
+  }
+}
+
+export const refreshTokenApi = async(thunkApi)=>{
+  const refreshToken = localStorage.getItem('jwt_question_set') || '';
+  try {
+    const res = await ax.post('user/refresh',{ refreshToken });
+    return { ...res.data };
+  } catch (error) {
     return thunkApi.rejectWithValue({ message: error.response.data.message });
   }
 }

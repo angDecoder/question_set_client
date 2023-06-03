@@ -5,11 +5,13 @@ import ham from '../../assets/hamburger.svg';
 import close from '../../assets/cross.svg';
 import './Navbar.css';
 import { useSelector } from 'react-redux';
-import { USER_STATUS } from '../../features/userSlice';
+import { USER_STATUS,logoutUser } from '../../features/userSlice';
+import { useDispatch } from 'react-redux';
 
 function Navbar() {
 
-  const { username,status } = useSelector(state => state.user);
+  const { username,status,email } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const hideNavbar = () => {
     const navbar = document.querySelector("nav");
@@ -37,7 +39,9 @@ function Navbar() {
         <NavLink className='navlink' to='/challenge'>Challenge</NavLink>
         {
           status === USER_STATUS.loggedin ?
-          <NavLink id='username' className='navlink' to='/'>Logout @{username}</NavLink>:
+          <NavLink onClick={()=> dispatch(logoutUser({email})) } id='username' className='navlink' to='/'>
+            Logout @{username}
+          </NavLink>:
           <span></span> 
         }
       </nav>
