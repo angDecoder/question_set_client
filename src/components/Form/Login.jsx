@@ -2,9 +2,7 @@ import React,{ useRef } from 'react';
 import './Form.css'
 import { toast } from 'react-toastify';
 import { useNavigate,useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-// import { loginUserApi } from '../../api/User';
-import { useDispatch } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { loginUser } from '../../features/userSlice';
 // import { USER_STATUS } from '../../features/userSlice';
 
@@ -19,7 +17,7 @@ function Login() {
 
   const from = location?.state?.from || '/';
 
-  const submit = (e)=>{
+  const submit = async(e)=>{
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passRef.current.value;
@@ -30,6 +28,7 @@ function Login() {
     .setAttribute('disabled',true);
 
     const r = dispatch(loginUser({email,password,from,navigate}));
+    // console.log(r);
     r.finally(()=>{
       console.log('finally');
       document.querySelector('.btn[color="green"')

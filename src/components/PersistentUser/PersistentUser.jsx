@@ -16,7 +16,7 @@ function PersistentUser() {
     }
   },[userStatus]);
 
-  console.log('here');
+  // console.log('here');
 
   if( tried && userStatus!==USER_STATUS.waiting  )
     return <Outlet />

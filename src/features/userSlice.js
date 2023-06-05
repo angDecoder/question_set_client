@@ -72,8 +72,9 @@ const userSlice = createSlice({
         .addCase(refreshToken.pending,(state)=>{
             state.status = USER_STATUS.waiting;
         })
-        .addCase(refreshToken.fulfilled,(state)=>{
+        .addCase(refreshToken.fulfilled,(state,{ payload })=>{
             state.status = USER_STATUS.loggedin;
+            state.accessToken = payload.accessToken;
         })
         .addCase(refreshToken.rejected,(state)=>{
             state.status = USER_STATUS.loggedout;
