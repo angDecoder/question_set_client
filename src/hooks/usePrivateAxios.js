@@ -10,6 +10,9 @@ function isTokenExpired(token) {
     return (Math.floor((new Date).getTime() / 1000)) >= expiry;
 }
 
+const ax = axios.create({
+    baseURL: `${import.meta.env.VITE_REACT_APP_BASE_URL}`,
+});
 
 function usePrivateAxios() {
     
@@ -17,33 +20,31 @@ function usePrivateAxios() {
     const navigate = useNavigate();
     const location = useLocation();
     let accessToken = useSelector(state=>state.user.accessToken);
-    // console.log('orig',accessToken);
 
-    const ax = axios.create({
-        baseURL: `${import.meta.env.VITE_REACT_APP_BASE_URL}`,
-    });
 
     useEffect(() => {
         const reqInterceptor = ax.interceptors.request.use(
             async (config) => {
-                
+                console.log('axios interceptors');
+                config.headers['Authorization'] = `Bearer ${accessToken}`;
                 if( isTokenExpired(accessToken) ){
                     try {
                         const res = await dispatch(refreshToken());
-                        accessToken = res.payload.accessToken;
+                        config.headers['Authorization'] = `Bearer ${res.payload.accessToken}`;
                     } catch (error) {
                         toast.warning('Refresh token expired: login again');
                         navigate('/login',{ state : { from : location.pathname } });
                         return new axios.Cancel('Operation canceled by the user.');
                     }
                 }
-                config.headers.Authorization = `Bearer ${accessToken}`;
+                console.log(config);
                 return config;
             },
             (error) => Promise.reject(error)
         )
 
         return () => {
+            console.log('removed');
             ax.interceptors.request.eject(reqInterceptor);
         }
     }, []);
