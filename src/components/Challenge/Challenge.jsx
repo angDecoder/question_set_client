@@ -3,96 +3,65 @@ import { NavLink } from 'react-router-dom';
 import './Challenge.css';
 import add from '../../assets/add.svg';
 import trash from '../../assets/trash.svg';
-
-const challenges = [
-  {
-    id: 'kdjka',
-    title: 'first challenge',
-    owner: 'test@gmail.com',
-    total: 50,
-    solved: 10
-  },
-  {
-    id: 'akjd',
-    title: 'second challenge',
-    owner: 'test@gmail.com',
-    total: 50,
-    solved: 10
-  },
-  {
-    id: 'aka;jq',
-    title: 'third challenge',
-    owner: 'test@gmail.com',
-    total: 50,
-    solved: 10
-  },
-  {
-    id: 'akjdfkh',
-    title: 'forth challenge',
-    owner: 'test@gmail.com',
-    total: 50,
-    solved: 10
-  },
-  {
-    id: 'afkh',
-    title: 'forth challenge',
-    owner: 'test@gmail.com',
-    total: 50,
-    solved: 10
-  },
-  {
-    id: 'jkaafkh',
-    title: 'forth challenge',
-    owner: 'test@gmail.com',
-    total: 50,
-    solved: 10
-  },
-  {
-    id: 'jkah',
-    title: 'forth challenge',
-    owner: 'test@gmail.com',
-    total: 50,
-    solved: 10
-  },
-  {
-    id: 'jqijeh',
-    title: 'forth challenge',
-    owner: 'test@gmail.com',
-    total: 50,
-    solved: 10
-  },
-  {
-    id: 'ije',
-    title: 'forth challenge',
-    owner: 'test@gmail.com',
-    total: 50,
-    solved: 10
-  },
-  
-]
+import { useDispatch,useSelector } from 'react-redux';
+import { getAllChallenges,addNewChallenge,deleteChallenge } from '../../features/challengeSlice';
+import usePrivateAxios from '../../hooks/usePrivateAxios';
+import reload from '../../assets/reload.svg';
+import { toast } from 'react-toastify';
 
 function Challenge() {
 
-
+  const dispatch = useDispatch();
+  const ax = usePrivateAxios();
+  const { count,challenges } = useSelector((state)=>state.challenge);
+  
+  useEffect(()=>{
+    dispatch(getAllChallenges({ offset:count,ax }));
+  },[]);
+  
+  const refreshChallengeList = ()=>{
+    const reload = document.getElementById('reload');
+    reload.classList.add('spin');
+    // console.log(ax);
+    const r = dispatch(getAllChallenges({ offset:count,ax }));
+    r.finally(()=>{
+      // console.log('finally spin');
+      reload.classList.remove('spin');
+    })
+  }
+  
   const addChallenge = ()=>{
-    const arr = window.prompt('enter text');
-    console.log(arr);
+    let title = prompt('enter text') || "";
+    title = title.trim();
+    if( title==='' ){
+      toast("Challenge title can't be a empty string",{ type : 'info' });
+      return;
+    }
+
+    dispatch(addNewChallenge({title,ax}));
+  }
+  
+  const trashController = (id)=>{
+    const res = confirm('Do you Really Want To Delete Challenge?');
+    if( !res )
+      return;
+
+    dispatch(deleteChallenge({ id,ax }));
   }
 
   return (
     <div id='Challenge'>
-      <h1 className='page_title'>Challenges</h1>
+      <h1 className='page_title'>
+        Challenges <img src={reload} id='reload'onClick={refreshChallengeList} alt="" />
+      </h1>
       {
         challenges.map((elem) => {
           const title = elem.title;
           const solvedByTotal = elem.solved + "/" + elem.total;
-          useEffect(() => {
-            const progress = elem.solved * 100 / elem.total;
-
-          }, [elem.solved, elem.total]);
-
           return <div key={elem.id} className='challenge_item'>
-            <img src={trash} alt="cross" className='svg-img cross' />
+            <img src={trash}
+              onClick={()=>trashController(elem.id)}
+            alt="cross" className='svg-img cross' />
             <NavLink to={`/question/${elem.id}`} className='challenge_title title'>
               {title}
               <span className='challenge_solved'> ({solvedByTotal})</span>

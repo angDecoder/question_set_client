@@ -25,7 +25,7 @@ function usePrivateAxios() {
     useEffect(() => {
         const reqInterceptor = ax.interceptors.request.use(
             async (config) => {
-                console.log('axios interceptors');
+                // console.log('axios interceptors');
                 config.headers['Authorization'] = `Bearer ${accessToken}`;
                 if( isTokenExpired(accessToken) ){
                     try {
@@ -37,14 +37,14 @@ function usePrivateAxios() {
                         return new axios.Cancel('Operation canceled by the user.');
                     }
                 }
-                console.log(config);
+                // console.log(config);
                 return config;
             },
             (error) => Promise.reject(error)
         )
 
         return () => {
-            console.log('removed');
+            // console.log('removed');
             ax.interceptors.request.eject(reqInterceptor);
         }
     }, []);

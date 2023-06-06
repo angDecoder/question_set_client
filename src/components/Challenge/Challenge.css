@@ -6,6 +6,14 @@
     position: relative;
 }
 
+#reload{
+    height: 25px;
+}
+
+.spin{
+    animation: reload-spin 1.7s linear 0ms infinite forwards ;
+}
+
 .challenge_item{
     border-block: 2px solid var(--border);
     position: relative;;
@@ -52,6 +60,15 @@
     position: absolute;
     top : -5px;
     right : 0px;
+}
+
+@keyframes reload-spin {
+    0%{
+        rotate: 0deg;
+    }
+    100%{
+        rotate: 360deg;
+    }
 }
 
 @media screen and (min-width: 480px) {

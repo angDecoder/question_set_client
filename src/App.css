@@ -38,12 +38,12 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: var(--box2)
+    background: #030836;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #262b5a;
+    background: #1b236d;
 }
 
 /* Handle on hover */

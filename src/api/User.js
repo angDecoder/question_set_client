@@ -68,6 +68,7 @@ export const autoLoginUserApi = async()=>{
   try {
     const res = await ax.post('user/autologin',{ refreshToken });
     toast.update(t,{render: `Logged in as "${res.data.username}"`, isLoading : false, type : 'success',autoClose : true,closeOnClick : true });
+    // console.log(res.data);
     return { ...res.data };
   } catch (error) {
     console.log(error);
