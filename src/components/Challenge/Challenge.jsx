@@ -41,12 +41,12 @@ function Challenge() {
     dispatch(addNewChallenge({title,ax}));
   }
   
-  const trashController = (id)=>{
+  const trashController = (question_id)=>{
     const res = confirm('Do you Really Want To Delete Challenge?');
     if( !res )
       return;
 
-    dispatch(deleteChallenge({ id,ax }));
+    dispatch(deleteChallenge({ question_id,challenge_id: id,ax }));
   }
 
   return (

@@ -48,6 +48,14 @@
     margin-inline: auto;
 }
 
+.question_check > img{
+    width: 35px;
+    margin-inline: 0.1em;
+}
+
+.question_item[solved='true']{
+    border : 2px solid var(--btn1);
+}
 
 @media screen and (min-width: 480px) {
     .question_link{
