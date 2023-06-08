@@ -1,21 +1,21 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { deleteQuestionApi, getAllQuestionApi } from '../api/Question';
+import { addNewQuestionApi, deleteQuestionApi, getAllQuestionApi } from '../api/Question';
 
 const initialState = {
-    list : []
+    listByChallengeId : {}
 }
 /*
-    {
+    challenge_id : {
         challenge_id : 'adlkj',
         count : 10,
-        questionList : [
-            {
+        questionById : {
+            id : {
                 "id": "26c7bc0e-8539-4946-bb58-db7bfc4fd1e2",
-            "title": "third question",
-            "tags": ["new","question","added"],
-            "solved": false
+                "title": "third question",
+                "tags": ["new","question","added"],
+                "solved": false
             }
-        ]
+        }
     }
 
  */
@@ -30,6 +30,11 @@ export const deleteQuestion = createAsyncThunk(
     deleteQuestionApi
 )
 
+export const addNewQuestion = createAsyncThunk(
+    'question/add',
+    addNewQuestionApi
+)
+
 const questionSlice = createSlice({
     name: 'question',
     initialState,
@@ -40,36 +45,51 @@ const questionSlice = createSlice({
         builder
         .addCase(deleteQuestion.fulfilled,(state,{ payload })=>{
             const { question_id,challenge_id } = payload;
-            state.list = state.list.map(elem=>{
-                if( elem.challenge_id===challenge_id ){
-                    elem.questionList = elem.questionList.filter(item=>item.id!==question_id);
-                }
-
-                return elem;
-            })
+            
+            if( state.listByChallengeId[`${challenge_id}`]?.questionById[`${question_id}`] ){
+                delete state.listByChallengeId[`${challenge_id}`].questionById[`${question_id}`];
+                state.listByChallengeId[`${challenge_id}`].count--;
+            }
         })
         .addCase(getAllQuestion.fulfilled,(state,{ payload })=>{
             console.log(payload);
             const { id,questions } = payload;
-            let found = false;
-            state.list = state.list.map(elem=>{
-                if( elem.challenge_id!==id )
-                    return elem;
-                found = true;
-                elem.count += questions.length
-                elem.questionList = [...state.questionList,...questions];
+            const newlist = {};
+            questions.forEach(elem => {
+                newlist[`${elem.id}`] = elem;
             });
-
-            if( !found ){
-                console.log('here');
-                state.list.push({
+            const oldlist = state.listByChallengeId[`${id}`];
+            console.log(newlist,oldlist);
+            if( !oldlist ){
+                state.listByChallengeId[`${id}`] = {
                     challenge_id : id,
                     count : questions.length,
-                    questionList : questions
-                })
+                    questionById : newlist
+                }
             }
-            // state[`${payload.id}`].questionList = payload.questions;
-        })        
+            else{
+                oldlist.count += questions.length;
+                oldlist.questionById = {...oldlist.questionById,...newlist};
+            }
+        }) 
+        .addCase(addNewQuestion.fulfilled,(state,{ payload })=>{
+            const { question,id } = payload;
+            const oldlist = state.listByChallengeId[`${id}`];
+            const newlist = {};
+            newlist[`${question.id}`] = question;
+            if( oldlist ){
+                oldlist.count++;
+                oldlist.questionById = {...oldlist.questionById,...newlist};
+            }
+            else{
+                state.listByChallengeId[`${id}`] = {
+                    challenge_id : id,
+                    count : 1,
+                    questionById : newlist
+                }
+            }
+            
+        })      
     }
 });
 

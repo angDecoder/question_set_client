@@ -15,11 +15,12 @@ function Question() {
   const ax = usePrivateAxios();
   const { id } = useParams();
   const { count,questionList } = useSelector((state)=>{
-    const val = state.question.list.filter(elem=>elem.challenge_id===id);
-    if( val.length===0 )
-      return { count : 0, questionList :[] }
-    return val[0];
+    let questionList = state.question.listByChallengeId[`${id}`]?.questionById || {};
+    let count = state.question.listByChallengeId[`${id}`]?.count || 0;
+    return { count,questionList };
   });
+
+  console.log(count,questionList);
 
   
   useEffect(()=>{
@@ -38,8 +39,8 @@ function Question() {
     <div id='Question'>
       <h1 className='page_title'>Question</h1>
       {
-        Array.isArray(questionList)?
-        questionList.map(elem=>{
+        count>0 ?
+        Object.values(questionList).map(elem=>{
           return <div className='question_item' solved={elem.solved?'true':'false'} key={elem.id}>
               <h2 className='title'>
                 {elem.title}
@@ -67,9 +68,9 @@ function Question() {
               <img src={trash} onClick={()=>confirmDelete(elem.id)} className='question_trash svg-img' alt="" />
           </div>
         }):
-        <p>No question Added</p>
+        <div>no question added</div>
       }
-      <img onClick={()=>navigate('/addquestion')} src={add} className='svg-img question_add' alt="" />
+      <img onClick={()=>navigate(`/addquestion/${id}`)} src={add} className='svg-img question_add' alt="" />
     </div>
   )
 }

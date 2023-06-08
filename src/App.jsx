@@ -44,7 +44,7 @@ function App() {
           <Route path='/' element={<ProtectedRoute />}>
             <Route path='/challenge' element={<Challenge />} />
             <Route path='/question/:id' element={<Question />} />
-            <Route path='/addquestion' element={<AddQuestion />} />
+            <Route path='/addquestion/:id' element={<AddQuestion />} />
             <Route path='/solution/:id' element={<Solution />} />
           </Route>
         </Route>

@@ -17,7 +17,7 @@ export const deleteQuestionApi = async({ question_id,id,ax })=>{
     try {
         await ax.delete(`/question?id=${id}&question_id=${question_id}`);
         toast.update(t,{ render:'Question Deleted',type : 'success',isLoading: false,closeOnClick: true,autoClose:true })
-
+        
         return { question_id,challenge_id : id };
     } catch (error) {
         toast.update(t,{ render:'Questions Not Deleted',type : 'error',isLoading: false,closeOnClick: true,autoClose:true })
@@ -25,6 +25,22 @@ export const deleteQuestionApi = async({ question_id,id,ax })=>{
     }
 }
 
-export const getSolutionApi = async()=>{
+export const addNewQuestionApi = async ({ title,tags,link,id,ax })=>{
+    const t = toast.loading('Adding new Question');
+    
+    try {
+        const res = await ax.post(`/question?id=${id}`,{
+            title,
+            tags,
+            link
+        });
+        
+        toast.update(t,{ render:'Question Added',type : 'success',isLoading: false,closeOnClick: true,autoClose:true })
 
+        return {question : res.data.question,id};
+    } catch (error) {
+        toast.update(t,{ render:'Question Not Added',type : 'error',isLoading: false,closeOnClick: true,autoClose:true })
+        
+        return thunkApi.rejectWithValue({ message: error.response.data.message });
+    }
 }

@@ -1,9 +1,17 @@
 import React,{ useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './AddQuestion.css';
 import add from '../../assets/add.svg';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { addNewQuestion } from '../../features/questionSlice';
+import usePrivateAxios from '../../hooks/usePrivateAxios';
 
 function AddQuestion() {
+
+  const dispatch = useDispatch();
+  const ax = usePrivateAxios();
+  const { id } = useParams();
 
   const [tags, setTags] = useState([]);
 
@@ -31,6 +39,37 @@ function AddQuestion() {
     setTags(newTag);
   }
 
+  const submitHandler = (e)=>{
+    e.preventDefault();
+    const title = document.getElementById('title').value.trim();
+    const link = document.getElementById('link').value.trim();
+    if( !title || !link ){
+        toast('title and link are required',{ type : 'info' });
+        return;
+    }
+    document.querySelector('.btn[color="green"')
+    .setAttribute('disabled',true);
+    document.querySelector('.btn[color="red"')
+    .setAttribute('disabled',true);
+
+    const r = dispatch( addNewQuestion({ ax,title,link,tags,id }) );
+    console.log(r);
+    r.finally(()=>{
+      console.log('finally');
+        document.querySelector('.btn[color="green"')
+      .setAttribute('disabled',false);
+      document.querySelector('.btn[color="red"')
+      .setAttribute('disabled',false);
+    })
+    clearHandler(e);
+  }
+  
+  const clearHandler = (e)=>{
+    e.preventDefault();
+    document.getElementById('title').value = '';
+    document.getElementById('link').value = '';
+  }
+
   return (
     <>
       <h1 className='page_title'>Add Question</h1>
@@ -52,8 +91,8 @@ function AddQuestion() {
             }
           </div>
           <div>
-            <button className="btn" color='green'>Submit</button>
-            <button className="btn" color='red'>Clear</button>
+            <button className="btn" color='green' onClick={submitHandler}>Submit</button>
+            <button className="btn" color='red' onClick={clearHandler}>Clear</button>
           </div>
       </form>
     </>
