@@ -57,7 +57,7 @@ function Question() {
                   Question Link
                 </a>
                 <button className='btn' color='green'
-                  onClick={()=>navigate(`/solution/someid`)}
+                  onClick={()=>navigate(`/solution/${elem.id}`)}
                 >Solution</button>
               </div>
               <p className=''>
