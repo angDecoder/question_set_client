@@ -56,12 +56,13 @@ function AddQuestion() {
     console.log(r);
     r.finally(()=>{
       console.log('finally');
-        document.querySelector('.btn[color="green"')
-      .setAttribute('disabled',false);
+      document.querySelector('.btn[color="green"')
+      .removeAttribute('disabled')
       document.querySelector('.btn[color="red"')
-      .setAttribute('disabled',false);
+      .removeAttribute('disabled')
+      clearHandler(e);
+      setTags([]);
     })
-    clearHandler(e);
   }
   
   const clearHandler = (e)=>{
