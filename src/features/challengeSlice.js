@@ -3,7 +3,7 @@ import { addNewChallengeApi, deleteChallengeApi, getAllChallengesApi } from '../
 
 const initialState = {
     count : 0,
-    challenges : []
+    challengeById : {}
 }
 
 export const getAllChallenges = createAsyncThunk(
@@ -32,14 +32,22 @@ const challengeSlice = createSlice({
         .addCase(getAllChallenges.fulfilled,(state,{payload})=>{
             // console.log(payload);
             state.count += payload.length;
-            state.challenges = [...state.challenges,...payload];
+            const newlist = {};
+            payload.forEach(elem => {
+                newlist[`${elem.id}`] = elem;
+            });
+
+            state.challengeById = {...state.challengeById,...newlist};
         })
         .addCase(addNewChallenge.fulfilled,(state,{ payload })=>{
             state.count++;
-            state.challenges.push({...payload.challenge,solved : 0});
+            state.challengeById[`${payload.challenge.id}`] = {...payload.challenge,solved : 0};
+            // state.challenges.push({...payload.challenge,solved : 0});
         })
         .addCase(deleteChallenge.fulfilled,(state,{ payload })=>{
-            state.challenges = state.challenges.filter(elem=>elem.id!==payload.id);
+            // state.challenges = state.challenges.filter(elem=>elem.id!==payload.id);
+            const { id } = payload;
+            delete state.challengeById[`${id}`];
         })
     }
 });
