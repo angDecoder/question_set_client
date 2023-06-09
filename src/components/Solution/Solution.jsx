@@ -18,8 +18,14 @@ function Solution() {
     const { id } = useParams();
     // console.log(params);
     let { code, language } = useSelector(state => {
-        return state.solution.solutionByQuestionId[`${id}`] || { code: 'no solution', language: 'js' };
+        return state.solution.solutionByQuestionId[`${id}`] 
+        || { code : 'no solution provided',language : 'cpp' };
     });
+
+    if( !code )
+        code = 'No Solution Provied';
+    if( !language )
+        language = 'cpp';
 
     useEffect(() => {
         dispatch(getSolution({ ax, question_id: id }));
@@ -64,7 +70,7 @@ function Solution() {
             <h1 className='page_title'>Solution</h1>
             <div id='solution_code'>
                 <SyntaxHighlighter showLineNumbers wrapLongLines language={language} style={atomDark}>
-                    {"\n" + code.trim()}
+                    {"\n" + code}
                 </SyntaxHighlighter>
                 <div id='solution_controls'>
                     <img src={copy} className='svg-img' alt=""
